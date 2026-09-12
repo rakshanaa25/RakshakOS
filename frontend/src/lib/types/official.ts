@@ -15,6 +15,56 @@ export type OperationalScreen =
 
 export type SeverityLevel = 'CRITICAL' | 'WARNING' | 'ACTIVE' | 'NORMAL';
 
+export interface PlanHistoryVersion {
+  version: string;
+  status: 'ACTIVE' | 'INVALIDATED' | 'SUPERSEDED' | 'DRAFT';
+  objective: string;
+  assignedTeam: string;
+  resources: string[];
+  route: string;
+  trigger: string;
+  changeReason: string;
+  timestamp: string;
+  agentAction: string;
+}
+
+export interface OperationalChangeEvent {
+  id: string;
+  incidentId: string;
+  title: string;
+  description: string;
+  timestamp: string;
+  changeType: 'ROAD_BLOCKED' | 'TEAM_DELAYED' | 'SURVIVOR_REPORT' | 'CAPACITY_REACHED' | 'WATER_RISING';
+  affectedPlanVersion: string;
+}
+
+export interface AssignedTeamDetail {
+  teamId: string;
+  teamName: string;
+  type: string;
+  leaderName: string;
+  membersCount: number;
+  status: string;
+  assignedEquipment: string[];
+}
+
+export interface ResponseOperationItem {
+  id: string;
+  code: string;
+  title: string;
+  severity: SeverityLevel;
+  status: 'RESPONSE_ACTIVE' | 'MONITORING' | 'PENDING' | 'RESOLVED';
+  location: string;
+  zoneId: string;
+  situation: string;
+  currentPlanVersion: string;
+  routeStatus: string;
+  plans: PlanHistoryVersion[];
+  changes: OperationalChangeEvent[];
+  assignedTeamDetail: AssignedTeamDetail;
+  allocatedResources: string[];
+}
+
 export interface IncidentItem {
   id: string;
   code: string;
