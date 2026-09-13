@@ -1,20 +1,59 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { mockVolunteerProfile, VolunteerProfile } from '@/lib/mock/volunteer-operations-data';
-import { UserCheck, MapPin, Award, CheckCircle2, User } from 'lucide-react';
+import { useVolunteerSession } from '@/lib/volunteer-session';
+import { UserCheck, MapPin, Award, CheckCircle2, User, ShieldAlert } from 'lucide-react';
 
 export default function ProfileAvailabilityPage() {
-  const [profile, setProfile] = useState<VolunteerProfile>(mockVolunteerProfile);
+  const { session, isLoaded, updateSession } = useVolunteerSession();
   const [notice, setNotice] = useState<string | null>(null);
 
+  if (!isLoaded) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 text-center font-sans text-xs text-slate-500">
+        Loading responder profile...
+      </div>
+    );
+  }
+
+  if (!session) {
+    return (
+      <div className="max-w-xl mx-auto px-4 py-12 font-sans">
+        <Card className="p-8 border-slate-200 bg-white shadow-2xs text-center space-y-4 rounded-xl">
+          <div className="w-12 h-12 bg-amber-50 border border-amber-200 rounded-full flex items-center justify-center mx-auto text-amber-700 font-bold">
+            <ShieldAlert className="w-6 h-6" />
+          </div>
+          <div className="space-y-1">
+            <h2 className="text-lg font-extrabold text-slate-900">Volunteer Session Required</h2>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              No active volunteer session was found for this browser. Please complete responder onboarding to access the profile & availability manager.
+            </p>
+          </div>
+          <div className="pt-2">
+            <Link href="/auth/volunteer">
+              <Button className="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-5 py-2.5 cursor-pointer">
+                Complete Volunteer Registration →
+              </Button>
+            </Link>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
   const handleStatusChange = (newStatus: 'AVAILABLE' | 'BUSY' | 'UNAVAILABLE') => {
-    setProfile((prev) => ({ ...prev, availability: newStatus }));
+    updateSession({ availability: newStatus });
     setNotice(`Operational status set to ${newStatus}`);
     setTimeout(() => setNotice(null), 4000);
   };
+
+  const displaySkills = session.skills && session.skills.length > 0
+    ? session.skills
+    : ['First Aid', 'Emergency Dispatch', 'Field Coordination'];
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto px-4 md:px-6 py-6 font-sans">
@@ -24,7 +63,7 @@ export default function ProfileAvailabilityPage() {
           <div className="flex items-center gap-2 flex-wrap">
             <Badge variant="outline" className="border-slate-300 text-slate-800 font-semibold bg-slate-50">
               <User className="w-3.5 h-3.5 mr-1 text-slate-700 inline" />
-              ID: {profile.id}
+              ID: {session.id}
             </Badge>
             <Badge variant="success" className="text-xs font-mono uppercase">
               REGISTERED RESPONDER
@@ -33,7 +72,7 @@ export default function ProfileAvailabilityPage() {
 
           <div className="flex items-center gap-1.5 text-xs text-slate-600 font-mono">
             <MapPin size={13} className="text-slate-400" />
-            <span>{profile.location}</span>
+            <span>{session.regionLocation}</span>
           </div>
         </div>
 
@@ -60,32 +99,39 @@ export default function ProfileAvailabilityPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
             <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
               <span className="text-[10px] font-bold text-slate-500 uppercase block">Full Name</span>
-              <span className="font-bold text-slate-900 text-sm">{profile.name}</span>
+              <span className="font-bold text-slate-900 text-sm">{session.fullName}</span>
             </div>
 
             <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
               <span className="text-[10px] font-bold text-slate-500 uppercase block">Registered Role</span>
-              <span className="font-bold text-slate-900 uppercase font-mono">{profile.role.replace('_', ' ')}</span>
+              <span className="font-bold text-slate-900 uppercase font-mono">
+                {session.role === 'ngo_coordinator'
+                  ? `NGO Coordinator ${session.ngoName ? `(${session.ngoName})` : ''}`
+                  : 'Individual Responder'}
+              </span>
             </div>
 
             <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
               <span className="text-[10px] font-bold text-slate-500 uppercase block">Age / Gender</span>
-              <span className="font-semibold text-slate-800">{profile.age} years old ({profile.sex})</span>
+              <span className="font-semibold text-slate-800">
+                {session.age ? `${session.age} years old` : 'Age N/A'}{' '}
+                {session.sex ? `(${session.sex})` : ''}
+              </span>
             </div>
 
             <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
               <span className="text-[10px] font-bold text-slate-500 uppercase block">Mobile Contact</span>
-              <span className="font-bold text-slate-900 font-mono">{profile.mobile}</span>
+              <span className="font-bold text-slate-900 font-mono">{session.mobileNumber}</span>
             </div>
 
             <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
               <span className="text-[10px] font-bold text-slate-500 uppercase block">Email Address</span>
-              <span className="font-semibold text-slate-800">{profile.email}</span>
+              <span className="font-semibold text-slate-800">{session.email}</span>
             </div>
 
             <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
               <span className="text-[10px] font-bold text-slate-500 uppercase block">Primary Sector</span>
-              <span className="font-semibold text-slate-800">{profile.location}</span>
+              <span className="font-semibold text-slate-800">{session.regionLocation}</span>
             </div>
           </div>
 
@@ -94,7 +140,7 @@ export default function ProfileAvailabilityPage() {
               Verified Rescue & Technical Skills:
             </span>
             <div className="flex flex-wrap gap-2">
-              {profile.skills.map((skill, i) => (
+              {displaySkills.map((skill, i) => (
                 <span
                   key={i}
                   className="text-xs font-semibold bg-blue-50 text-blue-900 px-3 py-1 rounded-lg border border-blue-200 flex items-center gap-1.5"
@@ -121,15 +167,15 @@ export default function ProfileAvailabilityPage() {
             </span>
             <Badge
               variant={
-                profile.availability === 'AVAILABLE'
+                session.availability === 'AVAILABLE'
                   ? 'success'
-                  : profile.availability === 'BUSY'
+                  : session.availability === 'BUSY'
                   ? 'warning'
                   : 'critical'
               }
               className="text-sm font-bold uppercase font-mono px-4 py-1"
             >
-              {profile.availability}
+              {session.availability}
             </Badge>
           </div>
 
@@ -150,13 +196,13 @@ export default function ProfileAvailabilityPage() {
                 key={status}
                 onClick={() => handleStatusChange(status)}
                 className={`w-full p-3 rounded-lg text-xs font-bold transition-all cursor-pointer border flex items-center justify-between ${
-                  profile.availability === status
+                  session.availability === status
                     ? 'bg-slate-900 text-white border-slate-900 shadow-2xs'
                     : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
                 }`}
               >
                 <span>{status}</span>
-                {profile.availability === status && <CheckCircle2 size={16} className="text-emerald-400" />}
+                {session.availability === status && <CheckCircle2 size={16} className="text-emerald-400" />}
               </button>
             ))}
           </div>
@@ -165,3 +211,4 @@ export default function ProfileAvailabilityPage() {
     </div>
   );
 }
+

@@ -6,11 +6,24 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DetailModal, ModalContentData } from '@/components/official/DetailModal';
 import { mockVolunteerMission, MissionTeamMember } from '@/lib/mock/volunteer-operations-data';
+import { useVolunteerSession } from '@/lib/volunteer-session';
 import { Users, Phone, MapPin } from 'lucide-react';
 
 export default function VolunteerTeamPage() {
+  const { session } = useVolunteerSession();
   const [mission] = useState(mockVolunteerMission);
   const [selectedMember, setSelectedMember] = useState<MissionTeamMember | null>(null);
+
+  const activeTeamMembers = mission.teamMembers.map((mem) => {
+    if (mem.name.includes('(You)') || mem.name === 'Arun Kumar (You)') {
+      return {
+        ...mem,
+        name: session?.fullName ? `${session.fullName} (You)` : mem.name,
+        contactPhone: session?.mobileNumber || mem.contactPhone,
+      };
+    }
+    return mem;
+  });
 
   const getMemberModalData = (mem: MissionTeamMember): ModalContentData => ({
     type: 'TEAM',
@@ -62,7 +75,7 @@ export default function VolunteerTeamPage() {
 
       {/* Member Roster Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {mission.teamMembers.map((mem) => (
+        {activeTeamMembers.map((mem) => (
           <Card
             key={mem.id}
             onClick={() => setSelectedMember(mem)}
@@ -123,3 +136,4 @@ export default function VolunteerTeamPage() {
     </div>
   );
 }
+

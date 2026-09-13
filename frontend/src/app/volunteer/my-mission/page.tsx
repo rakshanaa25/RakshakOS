@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DetailModal, ModalContentData } from '@/components/official/DetailModal';
 import { mockVolunteerMission, MissionTeamMember, MissionResourceItem } from '@/lib/mock/volunteer-operations-data';
+import { useVolunteerSession } from '@/lib/volunteer-session';
 import {
   Target,
   CheckCircle2,
@@ -17,6 +18,7 @@ import {
 } from 'lucide-react';
 
 export default function MyMissionPage() {
+  const { session } = useVolunteerSession();
   const [mission, setMission] = useState(mockVolunteerMission);
   const [selectedMemberModal, setSelectedMemberModal] = useState<MissionTeamMember | null>(null);
   const [selectedResourceModal, setSelectedResourceModal] = useState<MissionResourceItem | null>(null);
@@ -71,6 +73,17 @@ export default function MyMissionPage() {
       { label: 'Allocation Status', value: res.status, mono: true },
       { label: 'Staging Location', value: res.location },
     ],
+  });
+
+  const activeTeamMembers = mission.teamMembers.map((mem) => {
+    if (mem.name.includes('(You)') || mem.name === 'Arun Kumar (You)') {
+      return {
+        ...mem,
+        name: session?.fullName ? `${session.fullName} (You)` : mem.name,
+        contactPhone: session?.mobileNumber || mem.contactPhone,
+      };
+    }
+    return mem;
   });
 
   return (
@@ -185,12 +198,12 @@ export default function MyMissionPage() {
               <p className="text-xs text-slate-500 font-sans">{mission.assignedTeam}</p>
             </div>
             <Badge variant="outline" className="text-xs font-mono">
-              {mission.teamMembers.length} Responders
+              {activeTeamMembers.length} Responders
             </Badge>
           </div>
 
           <div className="space-y-2.5">
-            {mission.teamMembers.map((mem) => (
+            {activeTeamMembers.map((mem) => (
               <div
                 key={mem.id}
                 onClick={() => setSelectedMemberModal(mem)}

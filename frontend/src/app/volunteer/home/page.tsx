@@ -23,14 +23,17 @@ import {
   Flame,
 } from 'lucide-react';
 
+import { useVolunteerSession } from '@/lib/volunteer-session';
+import { User, ShieldAlert } from 'lucide-react';
+
 export default function VolunteerHomePage() {
-  const [profile, setProfile] = useState(mockVolunteerProfile);
+  const { session, isLoaded, updateSession } = useVolunteerSession();
   const [mission] = useState(mockVolunteerMission);
   const [availabilityNotice, setAvailabilityNotice] = useState<string | null>(null);
   const [selectedZoneModal, setSelectedZoneModal] = useState<DisasterSensitivityZone | null>(null);
 
   const handleAvailabilityChange = (newStatus: 'AVAILABLE' | 'BUSY' | 'UNAVAILABLE') => {
-    setProfile((prev) => ({ ...prev, availability: newStatus }));
+    updateSession({ availability: newStatus });
     setAvailabilityNotice(`Availability updated to ${newStatus}`);
     setTimeout(() => setAvailabilityNotice(null), 3000);
   };
@@ -62,6 +65,41 @@ export default function VolunteerHomePage() {
     ],
   });
 
+  if (!isLoaded) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 text-center font-sans text-xs text-slate-500">
+        Loading responder session...
+      </div>
+    );
+  }
+
+  if (!session) {
+    return (
+      <div className="max-w-xl mx-auto px-4 py-12 font-sans">
+        <Card className="p-8 border-slate-200 bg-white shadow-2xs text-center space-y-4 rounded-xl">
+          <div className="w-12 h-12 bg-amber-50 border border-amber-200 rounded-full flex items-center justify-center mx-auto text-amber-700 font-bold">
+            <ShieldAlert className="w-6 h-6" />
+          </div>
+          <div className="space-y-1">
+            <h2 className="text-lg font-extrabold text-slate-900">Volunteer Session Required</h2>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              No active volunteer session was found for this browser. Please complete responder onboarding to access the field response dashboard.
+            </p>
+          </div>
+          <div className="pt-2">
+            <Link href="/auth/volunteer">
+              <Button className="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-5 py-2.5 cursor-pointer">
+                Complete Volunteer Registration →
+              </Button>
+            </Link>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  const currentAvailability = session.availability || 'AVAILABLE';
+
   return (
     <div className="space-y-6 max-w-7xl mx-auto px-4 md:px-6 py-6 font-sans">
       {/* Top Welcome Header */}
@@ -70,17 +108,17 @@ export default function VolunteerHomePage() {
           <div className="flex items-center gap-2">
             <Badge variant="outline" className="border-slate-300 text-slate-800 font-semibold bg-slate-50">
               <Shield className="w-3.5 h-3.5 mr-1 text-slate-700 inline" />
-              Responder ID: {profile.id}
+              Responder ID: {session.id}
             </Badge>
             <Badge variant="success" className="text-xs font-mono">
               FIELD ACTIVE
             </Badge>
           </div>
           <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-            Good morning, {profile.name}.
+            Good morning, {session.fullName}.
           </h1>
           <p className="text-xs md:text-sm text-slate-600 font-sans">
-            Ready for your current disaster response assignment in <strong className="text-slate-800">{profile.location}</strong>.
+            Ready for your current disaster response assignment in <strong className="text-slate-800">{session.regionLocation}</strong>.
           </p>
         </div>
 
@@ -90,7 +128,7 @@ export default function VolunteerHomePage() {
             <span className="text-slate-500 uppercase tracking-wider flex items-center gap-1">
               <UserCheck size={14} className="text-slate-700" /> Availability:
             </span>
-            <span className="font-mono text-slate-900 font-bold">{profile.availability}</span>
+            <span className="font-mono text-slate-900 font-bold">{currentAvailability}</span>
           </div>
 
           <div className="flex items-center gap-1.5 pt-1">
@@ -99,7 +137,7 @@ export default function VolunteerHomePage() {
                 key={status}
                 onClick={() => handleAvailabilityChange(status)}
                 className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
-                  profile.availability === status
+                  currentAvailability === status
                     ? 'bg-slate-900 text-white shadow-2xs'
                     : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
                 }`}

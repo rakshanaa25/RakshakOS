@@ -205,7 +205,7 @@ export const IncidentDetailWorkspace: React.FC<IncidentDetailWorkspaceProps> = (
 
                     <div className="p-3 rounded-md bg-slate-900 text-white space-y-1">
                       <span className="text-[10px] uppercase font-semibold text-amber-400 block font-mono">
-                        Strands Agent Execution Result Trace:
+                        System Execution Trace:
                       </span>
                       <p className="text-xs text-slate-200 font-sans">{activePlan.agentAction}</p>
                     </div>

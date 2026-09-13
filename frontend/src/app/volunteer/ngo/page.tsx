@@ -11,6 +11,7 @@ import {
   mockNgoData,
   NgoMember,
 } from '@/lib/mock/volunteer-operations-data';
+import { useVolunteerSession } from '@/lib/volunteer-session';
 import {
   Building2,
   Users,
@@ -23,9 +24,13 @@ import {
 } from 'lucide-react';
 
 export default function NgoCoordinatorPage() {
+  const { session } = useVolunteerSession();
   const [ngoInfo] = useState(mockNgoData);
   const [members, setMembers] = useState<NgoMember[]>(mockNgoData.registeredMembers);
   const [selectedMemberModal, setSelectedMemberModal] = useState<NgoMember | null>(null);
+
+  const coordinatorName = session?.fullName || ngoInfo.coordinatorName;
+  const ngoName = session?.ngoName || ngoInfo.ngoName;
 
   // Manual Add Form State
   const [newName, setNewName] = useState('');
@@ -143,7 +148,7 @@ export default function NgoCoordinatorPage() {
           <div className="flex items-center gap-2 flex-wrap">
             <Badge variant="outline" className="border-sky-300 text-sky-900 bg-sky-50 font-semibold">
               <Building2 className="w-3.5 h-3.5 mr-1 text-sky-700 inline" />
-              {ngoInfo.ngoName}
+              {ngoName}
             </Badge>
             <Badge variant="success" className="text-xs font-mono uppercase">
               COORDINATOR LAYER ACTIVE
@@ -151,7 +156,7 @@ export default function NgoCoordinatorPage() {
           </div>
 
           <span className="text-xs text-slate-500 font-mono">
-            Coordinator: <strong className="text-slate-900">{ngoInfo.coordinatorName}</strong>
+            Coordinator: <strong className="text-slate-900">{coordinatorName}</strong>
           </span>
         </div>
 

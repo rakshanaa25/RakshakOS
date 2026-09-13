@@ -37,7 +37,7 @@ export const AgentActivitySummaryList: React.FC<AgentActivitySummaryListProps> =
             Recent Agent Operational Actions
           </CardTitle>
           <CardDescription className="text-xs">
-            Timestamped execution log from Strands multi-agent loop.
+            Timestamped execution log from multi-agent observation loop.
           </CardDescription>
         </div>
 

@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DetailModal, ModalContentData } from '@/components/official/DetailModal';
 import { mockMissionMessages, mockVolunteerMission, MissionMessage } from '@/lib/mock/volunteer-operations-data';
+import { useVolunteerSession } from '@/lib/volunteer-session';
 import { MessageSquare, Send, Clock } from 'lucide-react';
 
 export default function VolunteerCommunicationPage() {
+  const { session } = useVolunteerSession();
   const [messages, setMessages] = useState<MissionMessage[]>(mockMissionMessages);
   const [messageInput, setMessageInput] = useState<string>('');
   const [selectedMessageModal, setSelectedMessageModal] = useState<MissionMessage | null>(null);
@@ -17,9 +19,11 @@ export default function VolunteerCommunicationPage() {
     e.preventDefault();
     if (!messageInput.trim()) return;
 
+    const senderName = session?.fullName ? `${session.fullName} (You)` : 'Volunteer (You)';
+
     const newMessage: MissionMessage = {
       id: `msg-${Date.now().toString().slice(-4)}`,
-      sender: 'Arun Kumar (You)',
+      sender: senderName,
       senderType: 'VOLUNTEER',
       message: messageInput.trim(),
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),

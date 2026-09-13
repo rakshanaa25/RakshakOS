@@ -17,7 +17,7 @@ export const HumanAttentionPanel: React.FC<HumanAttentionPanelProps> = ({ items:
 
   const handleAction = (itemId: string, decision: 'APPROVED' | 'REJECTED' | 'MODIFIED') => {
     setItems((prev) => prev.filter((i) => i.id !== itemId));
-    setActionFeedback(`Action ${decision.toLowerCase()} successfully. Operation updated in Strands loop.`);
+    setActionFeedback(`Action ${decision.toLowerCase()} successfully. Operation updated in EOC control loop.`);
     setTimeout(() => setActionFeedback(null), 4000);
   };
 

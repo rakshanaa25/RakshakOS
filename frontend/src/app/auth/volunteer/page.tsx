@@ -8,11 +8,11 @@ import { RoleSelector } from '@/components/auth/RoleSelector';
 import { IndividualVolunteerForm } from '@/components/auth/IndividualVolunteerForm';
 import { NgoCoordinatorForm } from '@/components/auth/NgoCoordinatorForm';
 import { VolunteerRoleType, IndividualVolunteerRegistration, NgoCoordinatorRegistration } from '@/lib/types/auth';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, CheckCircle2, Shield, ArrowRight, RefreshCw } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, RefreshCw } from 'lucide-react';
 import { Footer } from '@/components/navigation/footer';
+
+import { saveVolunteerSession, VolunteerSessionData } from '@/lib/volunteer-session';
 
 export default function VolunteerAuthPage() {
   const router = useRouter();
@@ -30,6 +30,23 @@ export default function VolunteerAuthPage() {
     cvDetails?: { name: string; size: number } | null
   ) => {
     setIsLoading(true);
+
+    const mockId = `VOL-MOCK-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+    const sessionData: VolunteerSessionData = {
+      id: mockId,
+      role: 'individual',
+      fullName: formData.fullName,
+      age: formData.age !== '' ? formData.age : undefined,
+      sex: formData.sex !== '' ? formData.sex : undefined,
+      mobileNumber: formData.mobileNumber,
+      email: formData.email,
+      regionLocation: formData.regionLocation,
+      skills: formData.skills,
+      availability: (formData.availability.toUpperCase() as 'AVAILABLE' | 'BUSY' | 'UNAVAILABLE') || 'AVAILABLE',
+      createdAt: new Date().toISOString(),
+    };
+    saveVolunteerSession(sessionData);
+
     setTimeout(() => {
       setIsLoading(false);
       setSubmittedData({
@@ -43,6 +60,23 @@ export default function VolunteerAuthPage() {
 
   const handleNgoSubmit = (formData: NgoCoordinatorRegistration) => {
     setIsLoading(true);
+
+    const mockId = `NGO-MOCK-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+    const sessionData: VolunteerSessionData = {
+      id: mockId,
+      role: 'ngo_coordinator',
+      fullName: formData.coordinatorFullName,
+      mobileNumber: formData.coordinatorMobile,
+      email: formData.coordinatorEmail,
+      regionLocation: formData.regionLocation,
+      skills: ['NGO Coordination', 'Resource Logistics', 'Roster Management'],
+      availability: 'AVAILABLE',
+      ngoName: formData.ngoName,
+      organizationDetails: formData.organizationDetails,
+      createdAt: new Date().toISOString(),
+    };
+    saveVolunteerSession(sessionData);
+
     setTimeout(() => {
       setIsLoading(false);
       setSubmittedData({
@@ -54,100 +88,92 @@ export default function VolunteerAuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans selection:bg-slate-900 selection:text-white">
-      {/* Header Bar */}
-      <header className="border-b border-slate-200 bg-white px-4 md:px-8 py-4 sticky top-0 z-50 shadow-2xs">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <BrandLogo size="md" role="Volunteer Onboarding Portal" />
-          <div className="flex items-center gap-3">
-            <Link href="/">
-              <Button variant="outline" size="sm" className="gap-2 text-xs font-sans text-slate-700">
-                <ArrowLeft size={14} /> Back to Portal
-              </Button>
-            </Link>
-          </div>
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans">
+      {/* Header */}
+      <header className="border-b border-slate-200 bg-white px-4 md:px-8 py-3.5 sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
+          <BrandLogo size="md" />
+          <Link href="/">
+            <Button variant="outline" size="sm" className="gap-1.5 text-xs text-slate-600 h-8">
+              <ArrowLeft size={13} /> Back
+            </Button>
+          </Link>
         </div>
       </header>
 
-      {/* Main Page Container */}
-      <main className="flex-1 max-w-4xl mx-auto px-4 py-8 md:py-12 w-full space-y-8">
-        {/* Page Heading */}
-        <div className="p-6 rounded-lg border border-slate-200 bg-white space-y-2 font-sans shadow-2xs">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="success">Field Responder Registration</Badge>
-            <Badge variant="outline">RakshakOS Onboarding</Badge>
+      <main className="flex-1 max-w-4xl mx-auto px-4 py-8 w-full space-y-6">
+
+        {/* Page heading */}
+        {!submittedData && (
+          <div className="space-y-1">
+            <p className="text-[11px] font-mono font-semibold text-slate-500 uppercase tracking-widest">
+              Responder Onboarding
+            </p>
+            <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+              Join the Response Network
+            </h1>
+            <p className="text-sm text-slate-500">
+              Choose your participation role and complete registration.
+            </p>
           </div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
-            Volunteer & NGO Coordinator Registration
-          </h1>
-          <p className="text-xs md:text-sm text-slate-600 font-sans leading-relaxed">
-            Register as an individual emergency field responder or onboard an NGO organization roster.
-          </p>
-        </div>
+        )}
 
-        {/* Prototype Registration Success Banner / Modal */}
+        {/* Registration success */}
         {submittedData ? (
-          <Card className="border-emerald-300 bg-white font-sans text-xs shadow-md">
-            <CardHeader className="border-b border-slate-100 bg-emerald-50/60 p-6 space-y-2 rounded-t-lg">
-              <div className="flex items-center justify-between">
-                <Badge variant="success" className="font-sans">
-                  Registration Prototype Confirmed
-                </Badge>
-                <span className="text-xs text-slate-500 font-mono">{new Date(submittedData.timestamp).toLocaleTimeString()}</span>
+          <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+            {/* Success header strip */}
+            <div className="bg-emerald-700 px-6 py-4 flex items-center gap-3">
+              <CheckCircle2 className="text-white w-5 h-5 shrink-0" />
+              <div>
+                <p className="text-white font-bold text-sm">
+                  {submittedData.role === 'individual'
+                    ? 'Individual Volunteer Registered'
+                    : 'NGO Coordinator Registered'}
+                </p>
+                <p className="text-emerald-200 text-xs mt-0.5">
+                  Profile captured · {new Date(submittedData.timestamp).toLocaleTimeString()}
+                </p>
               </div>
-              <CardTitle className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                <CheckCircle2 size={24} className="text-emerald-700" />
-                {submittedData.role === 'individual'
-                  ? 'Individual Volunteer Profile Registered'
-                  : 'NGO Coordinator & Roster Onboarded'}
-              </CardTitle>
-              <CardDescription className="text-slate-600 font-sans">
-                Responder information has been captured in local prototype state.
-              </CardDescription>
-            </CardHeader>
+            </div>
 
-            <CardContent className="p-6 space-y-4">
-              <div className="p-4 rounded-md border border-amber-200 bg-amber-50 text-amber-900 text-xs font-sans flex items-start gap-2">
-                <Shield size={18} className="text-amber-700 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="font-bold block">Prototype Activation Status:</strong>
-                  Your responder profile is queued for account activation. You may now proceed directly to your assigned Volunteer Response Center dashboard.
-                </div>
-              </div>
-            </CardContent>
+            <div className="p-6 space-y-4">
+              <p className="text-sm text-slate-700">
+                Your responder profile has been saved to this browser session. You can now access the Volunteer Response Center.
+              </p>
 
-            <CardFooter className="p-6 border-t border-slate-100 bg-slate-50/50 rounded-b-lg flex flex-wrap gap-3 justify-between">
-              <Button
-                variant="outline"
-                onClick={() => setSubmittedData(null)}
-                className="gap-2 text-slate-700 border-slate-300"
-              >
-                <RefreshCw size={14} /> Register Another Profile
-              </Button>
+              <div className="flex flex-wrap gap-3 pt-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSubmittedData(null)}
+                  className="gap-1.5 text-slate-700 text-xs"
+                >
+                  <RefreshCw size={13} /> Register another profile
+                </Button>
 
-              <div className="flex items-center gap-2">
                 {submittedData.role === 'ngo_coordinator' && (
                   <Button
                     variant="outline"
+                    size="sm"
                     onClick={() => router.push('/volunteer/ngo')}
-                    className="text-sky-800 border-sky-300 bg-sky-50 hover:bg-sky-100 font-sans"
+                    className="text-sky-800 border-sky-300 bg-sky-50 hover:bg-sky-100 text-xs"
                   >
-                    Open NGO Management Layer →
+                    Open NGO Management →
                   </Button>
                 )}
+
                 <Button
                   onClick={() => router.push('/volunteer/home')}
-                  className="bg-emerald-700 hover:bg-emerald-600 text-white font-sans gap-2"
+                  className="bg-slate-900 hover:bg-slate-800 text-white text-xs gap-1.5"
                 >
-                  <span>Proceed to Volunteer Response Center</span>
-                  <ArrowRight size={16} />
+                  Proceed to Response Center
+                  <ArrowRight size={14} />
                 </Button>
               </div>
-            </CardFooter>
-          </Card>
+            </div>
+          </div>
         ) : (
-          /* Authentication Flow Form Container */
-          <div className="space-y-6">
+          <div className="space-y-5">
             <RoleSelector selectedRole={selectedRole} onSelectRole={setSelectedRole} />
 
             {selectedRole === 'individual' ? (

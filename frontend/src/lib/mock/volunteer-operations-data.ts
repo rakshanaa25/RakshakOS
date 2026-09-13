@@ -114,9 +114,9 @@ export const mockVolunteerMission: VolunteerMission = {
   assignedTeam: 'Rescue Team Alpha',
   teamLeader: 'Commander Arun Kumar (NDRF)',
   status: 'En Route',
-  currentRoute: 'Alternative Route B (via Eastern Peripheral Highway)',
-  previousRoute: 'Canal Road R17 (Impassable - Submerged 1.4m)',
-  routeStatus: 'Active Reroute (+14m detour)',
+  currentRoute: 'Route Alternative C (via Eastern Peripheral Highway Detour)',
+  previousRoute: 'Route Alternative B (Impassable — Submerged 1.4m at North Canal Underpass)',
+  routeStatus: 'Route Plan V2 Active (+14m detour)',
   teamMembers: [
     {
       id: 'tm-1',
@@ -158,7 +158,7 @@ export const mockVolunteerMission: VolunteerMission = {
       type: 'Boat Asset',
       status: 'Allocated',
       location: 'North Canal Staging Point',
-      operationalNote: 'Equipped with outboard motor & 30 life jackets. Assigned for primary evacuation.',
+      operationalNote: 'Boat 02 equipped with outboard motor & 30 life jackets. Assigned for primary evacuation at North Canal.',
     },
     {
       id: 'res-medkit-04',
@@ -166,7 +166,7 @@ export const mockVolunteerMission: VolunteerMission = {
       type: 'Medical Asset',
       status: 'Allocated',
       location: 'Sector 7 Staging Base',
-      operationalNote: 'Includes trauma dressings, IV fluids, and hypothermia thermal blankets.',
+      operationalNote: 'Medical Kit 04 includes trauma dressings, IV fluids, and hypothermia thermal blankets.',
     },
   ],
 };
@@ -175,8 +175,8 @@ export const mockFieldReports: FieldSituationReport[] = [
   {
     id: 'RPT-041',
     category: 'Road Blocked',
-    description: 'Canal Road R17 completely submerged under 1.4m water near Bridge 2. Impassable for light rescue vehicles.',
-    location: 'North Canal Road R17',
+    description: 'Route Alternative B completely submerged under 1.4m floodwater near North Canal Underpass. Impassable for rescue vehicles.',
+    location: 'North Canal — Route B',
     timestamp: '14:31',
     status: 'Actioned',
     attachmentName: 'water_depth_bridge2.jpg',
@@ -194,9 +194,9 @@ export const mockFieldReports: FieldSituationReport[] = [
 export const mockMissionMessages: MissionMessage[] = [
   {
     id: 'msg-101',
-    sender: 'Strands HydroAgent-02',
+    sender: 'System Dispatch Loop',
     senderType: 'AGENT',
-    message: 'Alternative Route B is now active. Canal Road R17 marked IMPASSABLE.',
+    message: 'Response Plan V2 active. Route Alternative C assigned to Rescue Team Alpha with Boat 02 and Medical Kit 04. Route Alternative B marked IMPASSABLE.',
     timestamp: '14:34',
     relatedContext: 'Route Reroute',
   },
@@ -204,16 +204,16 @@ export const mockMissionMessages: MissionMessage[] = [
     id: 'msg-102',
     sender: 'Commander Arun Kumar (Leader)',
     senderType: 'LEADER',
-    message: 'Team Alpha, proceed through East Service Road towards North Canal staging base.',
-    timestamp: '14:31',
+    message: 'Team Alpha, proceed via Route Alternative C towards North Canal staging point.',
+    timestamp: '14:35',
     relatedContext: 'Tactical Directive',
   },
   {
     id: 'msg-103',
-    sender: 'Strands ObservationLoop',
+    sender: 'Field Telemetry Monitor',
     senderType: 'AGENT',
-    message: 'Primary route unavailable due to 1.4m flooding at Bridge 2.',
-    timestamp: '14:28',
+    message: 'Route Alternative B unavailable due to 1.4m flooding at North Canal Underpass.',
+    timestamp: '14:31',
     relatedContext: 'Hazard Alert',
   },
 ];

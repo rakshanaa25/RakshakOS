@@ -106,7 +106,7 @@ export const PlaceholderScreen: React.FC<PlaceholderScreenProps> = ({
                 <div className="p-3 rounded-md bg-slate-50 border border-slate-200 space-y-1">
                   <span className="text-xs font-semibold text-slate-900 block">Agent System Protocol</span>
                   <p className="text-slate-600 text-xs leading-normal">
-                    Strands Agent performs continuous situational assessment, dispatch planning, and replanning within operational authority.
+                    System observation loop performs continuous situational assessment, dispatch planning, and replanning within operational authority.
                   </p>
                 </div>
                 <div className="p-3 rounded-md bg-slate-50 border border-slate-200 space-y-1">
