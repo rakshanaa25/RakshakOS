@@ -9,7 +9,6 @@ import { ExcelUpload } from '@/components/auth/ExcelUpload';
 import { CvUpload } from '@/components/auth/CvUpload';
 import {
   mockNgoData,
-  mockVolunteerProfile,
   NgoMember,
 } from '@/lib/mock/volunteer-operations-data';
 import {
@@ -18,19 +17,13 @@ import {
   UserPlus,
   FileSpreadsheet,
   MessageSquare,
-  Phone,
-  Mail,
   CheckCircle2,
   Send,
   Paperclip,
-  Award,
-  Clock,
-  ShieldCheck,
-  AlertTriangle,
 } from 'lucide-react';
 
 export default function NgoCoordinatorPage() {
-  const [ngoInfo, setNgoInfo] = useState(mockNgoData);
+  const [ngoInfo] = useState(mockNgoData);
   const [members, setMembers] = useState<NgoMember[]>(mockNgoData.registeredMembers);
   const [selectedMemberModal, setSelectedMemberModal] = useState<NgoMember | null>(null);
 
@@ -145,7 +138,7 @@ export default function NgoCoordinatorPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto px-4 md:px-6 py-6 font-sans">
       {/* Header Summary */}
-      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-xs space-y-4">
+      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2 flex-wrap">
             <Badge variant="outline" className="border-sky-300 text-sky-900 bg-sky-50 font-semibold">
@@ -188,7 +181,7 @@ export default function NgoCoordinatorPage() {
       </Card>
 
       {/* Roster & Detail Section */}
-      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-xs space-y-4">
+      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div>
             <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -249,7 +242,7 @@ export default function NgoCoordinatorPage() {
       {/* 2-Column Grid: Manual Add & Excel Batch Upload */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Manual Member Entry */}
-        <Card className="p-5 border-slate-200 bg-white shadow-xs space-y-4">
+        <Card className="p-5 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
           <div className="border-b border-slate-100 pb-3">
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <UserPlus className="w-4 h-4 text-sky-600" /> Manual Member Entry
@@ -258,7 +251,7 @@ export default function NgoCoordinatorPage() {
           </div>
 
           {addNotice && (
-            <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-md text-xs font-semibold flex items-center gap-2 animate-in fade-in">
+            <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-lg text-xs font-semibold flex items-center gap-2 animate-in fade-in">
               <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
               <span>{addNotice}</span>
             </div>
@@ -272,7 +265,7 @@ export default function NgoCoordinatorPage() {
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 placeholder="e.g. Ramesh Chandra"
-                className="w-full p-2 border border-slate-300 rounded-md font-sans focus:ring-2 focus:ring-slate-900/20"
+                className="w-full p-2 border border-slate-300 rounded-lg font-sans focus:ring-2 focus:ring-slate-900/20"
                 required
               />
             </div>
@@ -285,7 +278,7 @@ export default function NgoCoordinatorPage() {
                   value={newMobile}
                   onChange={(e) => setNewMobile(e.target.value)}
                   placeholder="+91 98765-XXXXX"
-                  className="w-full p-2 border border-slate-300 rounded-md font-mono focus:ring-2 focus:ring-slate-900/20"
+                  className="w-full p-2 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-slate-900/20"
                   required
                 />
               </div>
@@ -297,7 +290,7 @@ export default function NgoCoordinatorPage() {
                   value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
                   placeholder="name@civilnet.org"
-                  className="w-full p-2 border border-slate-300 rounded-md font-sans focus:ring-2 focus:ring-slate-900/20"
+                  className="w-full p-2 border border-slate-300 rounded-lg font-sans focus:ring-2 focus:ring-slate-900/20"
                   required
                 />
               </div>
@@ -310,13 +303,13 @@ export default function NgoCoordinatorPage() {
                 value={newSkills}
                 onChange={(e) => setNewSkills(e.target.value)}
                 placeholder="First Aid, Water Rescue, Logistics"
-                className="w-full p-2 border border-slate-300 rounded-md font-sans focus:ring-2 focus:ring-slate-900/20"
+                className="w-full p-2 border border-slate-300 rounded-lg font-sans focus:ring-2 focus:ring-slate-900/20"
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2 cursor-pointer flex items-center justify-center gap-2"
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2.5 cursor-pointer flex items-center justify-center gap-2 shadow-2xs"
             >
               <UserPlus size={14} /> Add Member to Roster
             </Button>
@@ -324,7 +317,7 @@ export default function NgoCoordinatorPage() {
         </Card>
 
         {/* Excel Batch Roster Upload */}
-        <Card className="p-5 border-slate-200 bg-white shadow-xs space-y-4">
+        <Card className="p-5 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
           <div className="border-b border-slate-100 pb-3">
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <FileSpreadsheet className="w-4 h-4 text-emerald-600" /> Excel Batch Roster Upload
@@ -350,7 +343,7 @@ export default function NgoCoordinatorPage() {
       {/* 2-Column Grid: CV Attachment & Member Communications */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* CV Attachment Component */}
-        <Card className="p-5 border-slate-200 bg-white shadow-xs space-y-4">
+        <Card className="p-5 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
           <div className="border-b border-slate-100 pb-3">
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <Paperclip className="w-4 h-4 text-sky-600" /> Member CV Attachment
@@ -359,7 +352,7 @@ export default function NgoCoordinatorPage() {
           </div>
 
           {cvNotice && (
-            <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-md text-xs font-semibold flex items-center gap-2 animate-in fade-in">
+            <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-lg text-xs font-semibold flex items-center gap-2 animate-in fade-in">
               <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
               <span>{cvNotice}</span>
             </div>
@@ -371,7 +364,7 @@ export default function NgoCoordinatorPage() {
               <select
                 value={cvMemberId}
                 onChange={(e) => setCvMemberId(e.target.value)}
-                className="w-full p-2 border border-slate-300 rounded-md bg-slate-50 font-sans"
+                className="w-full p-2 border border-slate-300 rounded-lg bg-slate-50 font-sans"
               >
                 {members.map((m) => (
                   <option key={m.id} value={m.id}>
@@ -394,7 +387,7 @@ export default function NgoCoordinatorPage() {
         </Card>
 
         {/* NGO Team Member Communication */}
-        <Card className="p-5 border-slate-200 bg-white shadow-xs space-y-4">
+        <Card className="p-5 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
           <div className="border-b border-slate-100 pb-3">
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <MessageSquare className="w-4 h-4 text-purple-600" /> NGO Team Direct Messaging
@@ -408,7 +401,7 @@ export default function NgoCoordinatorPage() {
               <select
                 value={commTargetId}
                 onChange={(e) => setCommTargetId(e.target.value)}
-                className="w-full p-2 border border-slate-300 rounded-md bg-slate-50 font-sans"
+                className="w-full p-2 border border-slate-300 rounded-lg bg-slate-50 font-sans"
               >
                 {members.map((m) => (
                   <option key={m.id} value={m.id}>
@@ -425,14 +418,14 @@ export default function NgoCoordinatorPage() {
                 value={commMessageText}
                 onChange={(e) => setCommMessageText(e.target.value)}
                 placeholder="Type instructions or check-in request for member..."
-                className="w-full p-2 border border-slate-300 rounded-md font-sans focus:ring-2 focus:ring-slate-900/20 resize-none"
+                className="w-full p-2 border border-slate-300 rounded-lg font-sans focus:ring-2 focus:ring-slate-900/20 resize-none"
                 required
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2 cursor-pointer flex items-center justify-center gap-2"
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2.5 cursor-pointer flex items-center justify-center gap-2 shadow-2xs"
             >
               <Send size={14} /> Send NGO Member Message
             </Button>
@@ -445,7 +438,7 @@ export default function NgoCoordinatorPage() {
             </span>
             <div className="space-y-2 max-h-[160px] overflow-y-auto pr-1">
               {ngoMessages.map((msg) => (
-                <div key={msg.id} className="p-2.5 bg-slate-50 border border-slate-200 rounded text-xs space-y-1">
+                <div key={msg.id} className="p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs space-y-1">
                   <div className="flex justify-between font-mono text-[10px] text-slate-500">
                     <span className="font-bold text-slate-900">To: {msg.targetName}</span>
                     <span>{msg.timestamp}</span>

@@ -10,9 +10,8 @@ import { HumanAttentionPanel } from '@/components/official/HumanAttentionPanel';
 import { ResponseStateCard } from '@/components/official/ResponseStateCard';
 import { DetailModal, ModalContentData } from '@/components/official/DetailModal';
 import { mockCommandCenterOverview } from '@/lib/mock/command-center-data';
-import { OperationalStat, OperationalAlert, AgentActivitySummaryEvent, IncidentItem } from '@/lib/types/official';
-import { Badge } from '@/components/ui/badge';
-import { Filter, Layers, CheckCircle2 } from 'lucide-react';
+import { OperationalStat, OperationalAlert, AgentActivitySummaryEvent } from '@/lib/types/official';
+import { Filter } from 'lucide-react';
 
 export default function CommandCenterPage() {
   const data = mockCommandCenterOverview;
@@ -222,7 +221,7 @@ export default function CommandCenterPage() {
       {/* Page Header */}
       <PageHeader
         title="Command Center"
-        subtitle="Operational overview of the active disaster response."
+        subtitle="Operational overview of active disaster response."
         scenarioName={data.disasterScenarioName}
         regionLocation={data.regionLocation}
         operationStatus={data.operationStatus}
@@ -230,7 +229,7 @@ export default function CommandCenterPage() {
       />
 
       {/* FILTER BAR FOR INTERACTIVE SEVERITY SWITCHING */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-lg border border-slate-200 bg-white shadow-2xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl border border-slate-200 bg-white shadow-2xs">
         <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
           <Filter size={14} className="text-slate-500" />
           <span>Filter Command View:</span>
@@ -243,9 +242,9 @@ export default function CommandCenterPage() {
               <button
                 key={filterKey}
                 onClick={() => setSeverityFilter(filterKey)}
-                className={`px-3 py-1 rounded-md text-xs font-sans font-semibold transition-all cursor-pointer ${
+                className={`px-3 py-1 rounded-lg text-xs font-sans font-semibold transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-slate-900 text-white shadow-xs'
+                    ? 'bg-slate-900 text-white shadow-2xs'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
               >
@@ -266,9 +265,9 @@ export default function CommandCenterPage() {
       <section className="space-y-2">
         <div className="flex items-center justify-between">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-500 font-sans">
-            Key Operational Metrics (Click Metric Card for Details)
+            Key Operational Metrics
           </h2>
-          <span className="text-[11px] text-slate-400 font-sans">Interactive Frontend Prototype</span>
+          <span className="text-[11px] font-mono text-slate-500">NORTH SECTOR TELEMETRY</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

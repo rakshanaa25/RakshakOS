@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DetailModal, ModalContentData } from '@/components/official/DetailModal';
 import { mockVolunteerMission, MissionResourceItem } from '@/lib/mock/volunteer-operations-data';
-import { Box, MapPin, CheckCircle2, ShieldCheck, Tag } from 'lucide-react';
+import { Box, MapPin } from 'lucide-react';
 
 export default function VolunteerResourcesPage() {
   const [mission] = useState(mockVolunteerMission);
@@ -32,7 +32,7 @@ export default function VolunteerResourcesPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto px-4 md:px-6 py-6 font-sans">
       {/* Header */}
-      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-xs space-y-4">
+      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2 flex-wrap">
             <Badge variant="outline" className="border-slate-300 text-slate-800 font-semibold bg-slate-50">
@@ -66,7 +66,7 @@ export default function VolunteerResourcesPage() {
           <Card
             key={res.id}
             onClick={() => setSelectedResource(res)}
-            className="p-5 border-slate-200 bg-white hover:border-slate-300 transition-all shadow-xs space-y-4 cursor-pointer"
+            className="p-5 border-slate-200 bg-white hover:border-slate-300 transition-all shadow-2xs space-y-4 cursor-pointer rounded-xl"
           >
             <div className="flex items-start justify-between">
               <div>
@@ -98,7 +98,7 @@ export default function VolunteerResourcesPage() {
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                 Operational Directive Note:
               </span>
-              <p className="text-slate-700 bg-slate-50 p-2.5 rounded border border-slate-200/80 leading-relaxed font-sans">
+              <p className="text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-200/80 leading-relaxed font-sans">
                 {res.operationalNote}
               </p>
             </div>

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DetailModal, ModalContentData } from '@/components/official/DetailModal';
 import { mockVolunteerMission, MissionTeamMember } from '@/lib/mock/volunteer-operations-data';
-import { Users, Phone, MapPin, ShieldCheck, CheckCircle2, Award, Clock } from 'lucide-react';
+import { Users, Phone, MapPin } from 'lucide-react';
 
 export default function VolunteerTeamPage() {
   const [mission] = useState(mockVolunteerMission);
@@ -32,7 +32,7 @@ export default function VolunteerTeamPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto px-4 md:px-6 py-6 font-sans">
       {/* Header Card */}
-      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-xs space-y-4">
+      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2 flex-wrap">
             <Badge variant="outline" className="border-slate-300 text-slate-800 font-semibold bg-slate-50">
@@ -66,7 +66,7 @@ export default function VolunteerTeamPage() {
           <Card
             key={mem.id}
             onClick={() => setSelectedMember(mem)}
-            className="p-5 border-slate-200 bg-white hover:border-slate-300 transition-all shadow-xs space-y-4 cursor-pointer"
+            className="p-5 border-slate-200 bg-white hover:border-slate-300 transition-all shadow-2xs space-y-4 cursor-pointer rounded-xl"
           >
             <div className="flex items-start justify-between">
               <div>

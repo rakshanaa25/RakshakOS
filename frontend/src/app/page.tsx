@@ -26,7 +26,7 @@ export default function RootPortalPage() {
       <main className="flex-1 max-w-5xl mx-auto px-4 md:px-6 py-12 md:py-16 space-y-12">
         {/* Product Identity Banner */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-200/60 border border-slate-300 text-slate-800 text-xs font-semibold">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-200/60 border border-slate-300 text-slate-800 text-xs font-semibold">
             <Activity className="w-3.5 h-3.5 text-slate-900" />
             <span>Autonomous Emergency Response & Field Operations</span>
           </div>
@@ -40,8 +40,8 @@ export default function RootPortalPage() {
           </p>
 
           <div className="pt-2 flex items-center justify-center gap-2 text-xs font-sans text-slate-500">
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            <span>System Operational • OBSERVE → ASSESS → PLAN → EXECUTE → MONITOR → REPLAN</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>System Active • Live Operational Telemetry</span>
           </div>
         </div>
 
@@ -58,8 +58,8 @@ export default function RootPortalPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
             {/* Official Access Card */}
-            <Card className="border-slate-200 hover:border-slate-400 transition-all shadow-sm flex flex-col justify-between">
-              <CardHeader className="p-6 space-y-3 bg-slate-50/50 rounded-t-lg">
+            <Card className="border-slate-200 hover:border-slate-300 transition-all shadow-2xs flex flex-col justify-between rounded-xl">
+              <CardHeader className="p-6 space-y-3 bg-slate-50/50 rounded-t-xl">
                 <div className="flex items-center justify-between">
                   <div className="p-2.5 rounded-lg bg-slate-900 text-amber-400">
                     <Shield size={24} />
@@ -98,7 +98,7 @@ export default function RootPortalPage() {
                 </div>
               </CardContent>
 
-              <CardFooter className="p-6 border-t border-slate-100 bg-slate-50/50 rounded-b-lg">
+              <CardFooter className="p-6 border-t border-slate-100 bg-slate-50/50 rounded-b-xl">
                 <Link href="/auth/official" className="w-full">
                   <Button className="w-full justify-between bg-slate-900 hover:bg-slate-800 text-white font-sans text-xs">
                     <span className="flex items-center gap-2">
@@ -111,8 +111,8 @@ export default function RootPortalPage() {
             </Card>
 
             {/* Volunteer Access Card */}
-            <Card className="border-slate-200 hover:border-slate-400 transition-all shadow-sm flex flex-col justify-between">
-              <CardHeader className="p-6 space-y-3 bg-slate-50/50 rounded-t-lg">
+            <Card className="border-slate-200 hover:border-slate-300 transition-all shadow-2xs flex flex-col justify-between rounded-xl">
+              <CardHeader className="p-6 space-y-3 bg-slate-50/50 rounded-t-xl">
                 <div className="flex items-center justify-between">
                   <div className="p-2.5 rounded-lg bg-emerald-700 text-white">
                     <Users size={24} />
@@ -152,7 +152,7 @@ export default function RootPortalPage() {
                 </div>
               </CardContent>
 
-              <CardFooter className="p-6 border-t border-slate-100 bg-slate-50/50 rounded-b-lg">
+              <CardFooter className="p-6 border-t border-slate-100 bg-slate-50/50 rounded-b-xl">
                 <Link href="/auth/volunteer" className="w-full">
                   <Button className="w-full justify-between bg-emerald-700 hover:bg-emerald-600 text-white font-sans text-xs">
                     <span className="flex items-center gap-2">

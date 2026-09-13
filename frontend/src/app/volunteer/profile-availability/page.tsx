@@ -2,10 +2,9 @@
 
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { mockVolunteerProfile, VolunteerProfile } from '@/lib/mock/volunteer-operations-data';
-import { UserCheck, Shield, Phone, Mail, MapPin, Award, CheckCircle2, User } from 'lucide-react';
+import { UserCheck, MapPin, Award, CheckCircle2, User } from 'lucide-react';
 
 export default function ProfileAvailabilityPage() {
   const [profile, setProfile] = useState<VolunteerProfile>(mockVolunteerProfile);
@@ -20,7 +19,7 @@ export default function ProfileAvailabilityPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto px-4 md:px-6 py-6 font-sans">
       {/* Header */}
-      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-xs space-y-4">
+      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2 flex-wrap">
             <Badge variant="outline" className="border-slate-300 text-slate-800 font-semibold bg-slate-50">
@@ -51,7 +50,7 @@ export default function ProfileAvailabilityPage() {
       {/* Main 2-Column Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column (2 cols): Profile Info */}
-        <Card className="lg:col-span-2 p-5 md:p-6 border-slate-200 bg-white shadow-xs space-y-5">
+        <Card className="lg:col-span-2 p-5 md:p-6 border-slate-200 bg-white shadow-2xs space-y-5 rounded-xl">
           <div className="border-b border-slate-100 pb-3">
             <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <UserCheck className="w-4 h-4 text-blue-600" /> Personal & Qualification Details
@@ -98,7 +97,7 @@ export default function ProfileAvailabilityPage() {
               {profile.skills.map((skill, i) => (
                 <span
                   key={i}
-                  className="text-xs font-semibold bg-blue-50 text-blue-900 px-3 py-1 rounded-md border border-blue-200 flex items-center gap-1.5"
+                  className="text-xs font-semibold bg-blue-50 text-blue-900 px-3 py-1 rounded-lg border border-blue-200 flex items-center gap-1.5"
                 >
                   <Award size={13} className="text-blue-600" /> {skill}
                 </span>
@@ -108,7 +107,7 @@ export default function ProfileAvailabilityPage() {
         </Card>
 
         {/* Right Column (1 col): Availability Control */}
-        <Card className="p-5 border-slate-200 bg-white shadow-xs space-y-5">
+        <Card className="p-5 border-slate-200 bg-white shadow-2xs space-y-5 rounded-xl">
           <div className="border-b border-slate-100 pb-3">
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <UserCheck className="w-4 h-4 text-emerald-600" /> Operational Availability
@@ -135,7 +134,7 @@ export default function ProfileAvailabilityPage() {
           </div>
 
           {notice && (
-            <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-md text-xs font-semibold flex items-center gap-2 animate-in fade-in">
+            <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-lg text-xs font-semibold flex items-center gap-2 animate-in fade-in">
               <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
               <span>{notice}</span>
             </div>
@@ -152,7 +151,7 @@ export default function ProfileAvailabilityPage() {
                 onClick={() => handleStatusChange(status)}
                 className={`w-full p-3 rounded-lg text-xs font-bold transition-all cursor-pointer border flex items-center justify-between ${
                   profile.availability === status
-                    ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
+                    ? 'bg-slate-900 text-white border-slate-900 shadow-2xs'
                     : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
                 }`}
               >

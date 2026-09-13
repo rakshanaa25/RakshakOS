@@ -13,11 +13,6 @@ import {
   MapPin,
   Clock,
   Paperclip,
-  AlertTriangle,
-  Flame,
-  Search,
-  Filter,
-  ShieldCheck,
 } from 'lucide-react';
 
 export default function ReportSituationPage() {
@@ -99,7 +94,7 @@ export default function ReportSituationPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto px-4 md:px-6 py-6 font-sans">
       {/* Header */}
-      <div className="bg-white border border-slate-200 rounded-xl p-5 md:p-6 shadow-xs space-y-1">
+      <div className="bg-white border border-slate-200 rounded-xl p-5 md:p-6 shadow-2xs space-y-1">
         <div className="flex items-center gap-2">
           <Badge variant="outline" className="border-slate-300 text-slate-800 font-semibold bg-slate-50">
             <FileText className="w-3.5 h-3.5 mr-1 text-slate-700 inline" />
@@ -120,7 +115,7 @@ export default function ReportSituationPage() {
       {/* Main 2-Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column (2 cols): Submission Form */}
-        <Card className="lg:col-span-2 p-5 md:p-6 border-slate-200 bg-white shadow-xs space-y-5">
+        <Card className="lg:col-span-2 p-5 md:p-6 border-slate-200 bg-white shadow-2xs space-y-5 rounded-xl">
           <div className="border-b border-slate-100 pb-3">
             <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <Send className="w-4 h-4 text-blue-600" /> Ground Situation Form
@@ -156,7 +151,7 @@ export default function ReportSituationPage() {
                     onClick={() => setSelectedCategory(cat)}
                     className={`p-2.5 rounded-lg text-xs font-bold transition-all border cursor-pointer ${
                       selectedCategory === cat
-                        ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
+                        ? 'bg-slate-900 text-white border-slate-900 shadow-2xs'
                         : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                     }`}
                   >
@@ -219,7 +214,7 @@ export default function ReportSituationPage() {
 
             <Button
               type="submit"
-              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2.5 cursor-pointer flex items-center justify-center gap-2 shadow-xs"
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2.5 cursor-pointer flex items-center justify-center gap-2 shadow-2xs"
             >
               <Send size={14} /> Submit Ground Report
             </Button>
@@ -227,7 +222,7 @@ export default function ReportSituationPage() {
         </Card>
 
         {/* Right Column (1 col): Reports History Stream */}
-        <Card className="p-5 border-slate-200 bg-white shadow-xs space-y-4">
+        <Card className="p-5 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
           <div className="border-b border-slate-100 pb-3">
             <h3 className="text-base font-bold text-slate-900">
               Submitted Reports Log ({reportsHistory.length})

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DetailModal, ModalContentData } from '@/components/official/DetailModal';
 import { mockMissionMessages, mockVolunteerMission, MissionMessage } from '@/lib/mock/volunteer-operations-data';
-import { MessageSquare, Send, Clock, Radio, User, Zap, ShieldCheck } from 'lucide-react';
+import { MessageSquare, Send, Clock } from 'lucide-react';
 
 export default function VolunteerCommunicationPage() {
   const [messages, setMessages] = useState<MissionMessage[]>(mockMissionMessages);
@@ -60,7 +60,7 @@ export default function VolunteerCommunicationPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto px-4 md:px-6 py-6 font-sans">
       {/* Header */}
-      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-xs space-y-4">
+      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2 flex-wrap">
             <Badge variant="outline" className="border-slate-300 text-slate-800 font-semibold bg-slate-50">
@@ -90,7 +90,7 @@ export default function VolunteerCommunicationPage() {
       {/* 2-Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column (1 col): Send Message Panel */}
-        <Card className="p-5 border-slate-200 bg-white shadow-xs space-y-4">
+        <Card className="p-5 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
           <div className="border-b border-slate-100 pb-3">
             <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <Send className="w-4 h-4 text-blue-600" /> Send Field Message
@@ -117,7 +117,7 @@ export default function VolunteerCommunicationPage() {
 
             <Button
               type="submit"
-              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2.5 cursor-pointer flex items-center justify-center gap-2 shadow-xs"
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2.5 cursor-pointer flex items-center justify-center gap-2 shadow-2xs"
             >
               <Send size={14} /> Send Message to Channel
             </Button>
@@ -125,7 +125,7 @@ export default function VolunteerCommunicationPage() {
         </Card>
 
         {/* Right Column (2 cols): Message Feed */}
-        <Card className="lg:col-span-2 p-5 border-slate-200 bg-white shadow-xs space-y-4">
+        <Card className="lg:col-span-2 p-5 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
           <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
             <h3 className="text-base font-bold text-slate-900">
               Mission Directives Feed ({messages.length})

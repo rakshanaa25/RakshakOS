@@ -9,17 +9,11 @@ import { mockVolunteerMission, MissionTeamMember, MissionResourceItem } from '@/
 import {
   Target,
   CheckCircle2,
-  Clock,
   Navigation,
   Users,
   Box,
   MapPin,
-  ShieldAlert,
   ArrowRight,
-  AlertTriangle,
-  Radio,
-  FileText,
-  UserCheck,
 } from 'lucide-react';
 
 export default function MyMissionPage() {
@@ -82,7 +76,7 @@ export default function MyMissionPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto px-4 md:px-6 py-6 font-sans">
       {/* Mission Header */}
-      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-xs space-y-4">
+      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="font-mono text-xs font-bold text-slate-800 bg-slate-100 px-2.5 py-1 rounded border border-slate-200">
@@ -114,7 +108,7 @@ export default function MyMissionPage() {
       </Card>
 
       {/* Interactive Mission Status Tracker */}
-      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-xs space-y-4">
+      <Card className="p-5 md:p-6 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
             <Target className="w-4 h-4 text-blue-600" /> Mission Execution Tracker
@@ -125,7 +119,7 @@ export default function MyMissionPage() {
         </div>
 
         {statusNotice && (
-          <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-md text-xs font-semibold flex items-center gap-2 animate-in fade-in">
+          <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-lg text-xs font-semibold flex items-center gap-2 animate-in fade-in">
             <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
             <span>{statusNotice}</span>
           </div>
@@ -141,7 +135,7 @@ export default function MyMissionPage() {
                 key={step}
                 className={`p-2.5 sm:p-3 rounded-lg border text-center transition-all space-y-1 ${
                   isCurrent
-                    ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
+                    ? 'bg-slate-900 text-white border-slate-900 shadow-2xs'
                     : isDone
                     ? 'bg-emerald-50 text-emerald-900 border-emerald-200'
                     : 'bg-slate-50 text-slate-400 border-slate-200'
@@ -157,7 +151,7 @@ export default function MyMissionPage() {
         </div>
 
         {/* Action Button to Progress Mission */}
-        <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 border-t border-slate-100">
           <span className="text-xs text-slate-500 font-sans">
             {mission.status === 'Completed'
               ? 'Mission completed. Operational log archived.'
@@ -167,7 +161,7 @@ export default function MyMissionPage() {
           {currentStepIndex < statusSteps.length - 1 && (
             <Button
               onClick={handleAdvanceStatus}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 h-9 cursor-pointer flex items-center gap-1.5 shadow-xs"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 h-9 cursor-pointer flex items-center gap-1.5 shadow-2xs w-full sm:w-auto justify-center"
             >
               {mission.status === 'Assigned' && 'Accept Mission'}
               {mission.status === 'Accepted' && 'Start Travel (En Route)'}
@@ -182,7 +176,7 @@ export default function MyMissionPage() {
       {/* 2-Column Grid: Team Roster & Allocated Resources */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Assigned Team */}
-        <Card className="p-5 border-slate-200 bg-white shadow-xs space-y-4">
+        <Card className="p-5 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
               <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -220,7 +214,7 @@ export default function MyMissionPage() {
         </Card>
 
         {/* Allocated Resources */}
-        <Card className="p-5 border-slate-200 bg-white shadow-xs space-y-4">
+        <Card className="p-5 border-slate-200 bg-white shadow-2xs space-y-4 rounded-xl">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
               <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -259,7 +253,7 @@ export default function MyMissionPage() {
       </div>
 
       {/* Active Route Advisory Block */}
-      <Card className="p-5 border-slate-200 bg-white shadow-xs space-y-3">
+      <Card className="p-5 border-slate-200 bg-white shadow-2xs space-y-3 rounded-xl">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
             <Navigation className="w-4 h-4 text-emerald-600" /> Tactical Navigation Route
